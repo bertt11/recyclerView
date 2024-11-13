@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -41,5 +42,11 @@ class adapterRevView (private val listWayang: ArrayList<wayang>) : RecyclerView.
         Picasso.get()
             .load(wayang.foto)
             .into(holder._gambarWayang)
+
+        //onclicklistener
+        holder._gambarWayang.setOnClickListener {
+        Toast.makeText(holder.itemView.context,wayang.nama,Toast.LENGTH_LONG).show()
+        }
     }
+
 }
