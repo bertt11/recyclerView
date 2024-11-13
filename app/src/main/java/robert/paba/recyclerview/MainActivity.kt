@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -31,5 +32,34 @@ class MainActivity : AppCompatActivity() {
         }
 
         _rvWayang = findViewById<RecyclerView>(R.id.rvWayang)
+        SiapkanData()
+        TambahData()
+        TampilkanData()
     }
+
+    fun SiapkanData() {
+
+        _nama = resources.getStringArray(R.array.namaWayang)
+        _deskripsi = resources.getStringArray(R.array.deskripsiWayang)
+        _karakter = resources.getStringArray(R.array.karakterUtamaWayang)
+        _gambar = resources.getStringArray(R.array.gambarWayang)
+    }
+
+    fun TambahData() {
+        for (position in _nama.indices) {
+            val data = wayang(
+                _gambar [position],
+                _nama[position],
+                _karakter[position],
+                _deskripsi[position]
+            )
+            arWayang.add(data)
+        }
+    }
+
+    fun TampilkanData() {
+        _rvWayang.layoutManager = LinearLayoutManager (this)
+        _rvWayang.adapter = adapterRevView(arWayang)
+    }
+
 }
