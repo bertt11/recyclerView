@@ -1,11 +1,15 @@
 package robert.paba.recyclerview
 
+import android.media.Image
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class adapterRevView (private val listWayang: ArrayList<wayang>) : RecyclerView.
     Adapter<adapterRevView.ListViewHolder> (){
@@ -14,7 +18,7 @@ class adapterRevView (private val listWayang: ArrayList<wayang>) : RecyclerView.
             var _namaWayang = itemView.findViewById<TextView>(R.id.namaWayang)
             var _karakterWayang = itemView.findViewById<TextView>(R.id.karakterWayang)
             var _deskripsiWayang = itemView.findViewById<TextView>(R.id.deskripsiWayang)
-            var _gambarWayang = itemView.findViewById<TextView>(R.id.gambarWayang)
+            var _gambarWayang = itemView.findViewById<ImageView>(R.id.gambarWayang)
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -33,5 +37,9 @@ class adapterRevView (private val listWayang: ArrayList<wayang>) : RecyclerView.
         holder._namaWayang.setText(wayang.nama)
         holder._deskripsiWayang.setText(wayang.deskripsi)
         holder._karakterWayang.setText(wayang.karakter)
+        Log.d("TEST", wayang.foto)
+        Picasso.get()
+            .load(wayang.foto)
+            .into(holder._gambarWayang)
     }
 }
