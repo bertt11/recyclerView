@@ -1,6 +1,8 @@
 package robert.paba.recyclerview
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -63,7 +65,24 @@ class MainActivity : AppCompatActivity() {
 //        _rvWayang.layoutManager = LinearLayoutManager (this)
 //        _rvWayang.layoutManager = GridLayoutManager (this,2)
         _rvWayang.layoutManager = StaggeredGridLayoutManager (2 , LinearLayoutManager.VERTICAL)
-        _rvWayang.adapter = adapterRevView(arWayang)
+//        _rvWayang.adapter = adapterRevView(arWayang)
+
+        //10.03
+        val adapterWayang = adapterRevView(arWayang)
+        _rvWayang.adapter = adapterWayang
+
+        adapterWayang.setOnItemClickCallback(object : adapterRevView.OnItemClickCallback {
+            override fun onItemClicked(data: wayang) {
+                Toast.makeText(this@MainActivity,data.nama,Toast.LENGTH_LONG)
+                    .show()
+
+                //10.03 pt2
+                val intent = Intent (this@MainActivity,detWayang::class.java)
+                intent.putExtra("kirimData", data)
+                startActivity(intent)
+            }
+            
+        })
     }
 
 }

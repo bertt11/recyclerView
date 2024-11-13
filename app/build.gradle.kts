@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+
+    //10.03
+    alias(libs.plugins.kotlinParcelize)
 }
 
 android {
