@@ -49,4 +49,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.picasso)
+
+    //codelab11
+    implementation(libs.gson)
 }

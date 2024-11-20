@@ -2,6 +2,7 @@ package robert.paba.recyclerview
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,14 +26,22 @@ class MainActivity : AppCompatActivity() {
 
 
     //10.04
-    private lateinit var _nama : MutableList<String>
-    private lateinit var _karakter : MutableList<String>
-    private lateinit var _deskripsi : MutableList<String>
-    private lateinit var _gambar : MutableList<String>
+//    private lateinit var _nama : MutableList<String>
+//    private lateinit var _karakter : MutableList<String>
+//    private lateinit var _deskripsi : MutableList<String>
+//    private lateinit var _gambar : MutableList<String>
 
     private var arWayang = arrayListOf<wayang>()
 
     private lateinit var _rvWayang : RecyclerView
+
+    //11
+    private var _nama : MutableList<String> = emptyList<String>().toMutableList()
+    private var _karakter : MutableList<String> = emptyList<String>().toMutableList()
+    private var _deskripsi : MutableList<String> = emptyList<String>().toMutableList()
+    private var _gambar : MutableList<String> = emptyList<String>().toMutableList()
+
+    lateinit var sp : SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,10 +54,32 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+
+        //11
+        sp = getSharedPreferences("dataSP", MODE_PRIVATE)
+
+
+
+        //10
         _rvWayang = findViewById<RecyclerView>(R.id.rvWayang)
-        SiapkanData()
+//        SiapkanData()
+        //11
+        if (arWayang.size ==0){
+            SiapkanData()
+        }else {
+            arWayang.forEach{
+                _nama.add(it.nama)
+                _gambar.add(it.foto)
+                _deskripsi.add(it.deskripsi)
+                _karakter.add(it.karakter)
+            }
+            arWayang.clear()
+        }
+        //10
         TambahData()
         TampilkanData()
+
+
     }
 
     fun SiapkanData() {
@@ -62,9 +94,14 @@ class MainActivity : AppCompatActivity() {
         _deskripsi = resources.getStringArray(R.array.deskripsiWayang).toMutableList()
         _karakter = resources.getStringArray(R.array.karakterUtamaWayang).toMutableList()
         _gambar = resources.getStringArray(R.array.gambarWayang).toMutableList()
+
     }
 
     fun TambahData() {
+
+        //11
+        val gson = Gson()
+        val editor = sp.edit()
 
         //10.04
         arWayang.clear()
@@ -79,6 +116,10 @@ class MainActivity : AppCompatActivity() {
             )
             arWayang.add(data)
         }
+        //11
+        val json = gson.toJson(arWayang)
+        editor.putString("spWayang",json)
+        editor.apply()
     }
 
     fun TampilkanData() {
